@@ -17,11 +17,11 @@ I will be using HTML and CSS to structure and style the page.
 
 # Wireframes:
 ## EXPANSION PHASE
-![Expansion Phase](./readme_asset/expansion_phase.png)
+![Expansion Phase](./readme_asset/expansion_phase.png | width=500)
 ## CONTRACTION PHASE
-![Contraction Phase](./readme_asset/contraction_phase.png)
+![Contraction Phase](./readme_asset/contraction_phase.png | width=500)
 ## POSSIBLE SCORING MECHANISM
-![Scoring](./readme_asset/general_mechanisms.png)
+![Scoring](./readme_asset/general_mechanisms.png | width=500)
 
 # MVP GOALS
 - Create a Start Menu that includes gameplay instructions, and a start button.
@@ -47,4 +47,3 @@ I will be using HTML and CSS to structure and style the page.
  - Not knowing OOP, I predict I will have difficulty modularizing and extending some of the objects I will be creating.
  - I don't know the full scope of what these rendering frameworks are capable of so I might do something that is not possible within some of them.
  - Not knowing how to register consecutive "events" in the stretch goal such as the 'click-mousedown-drag-click" event.
- 
