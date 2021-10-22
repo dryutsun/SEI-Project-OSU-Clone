@@ -17,11 +17,11 @@ I will be using HTML and CSS to structure and style the page.
 
 # Wireframes:
 ## EXPANSION PHASE
-![Expansion Phase](./readme_asset/expansion_phase.png | width=500)
+![Expansion Phase](./readme_asset/expansion_phase.png)
 ## CONTRACTION PHASE
-![Contraction Phase](./readme_asset/contraction_phase.png | width=500)
+![Contraction Phase](./readme_asset/contraction_phase.png)
 ## POSSIBLE SCORING MECHANISM
-![Scoring](./readme_asset/general_mechanisms.png | width=500)
+![Scoring](./readme_asset/general_mechanisms.png)
 
 # MVP GOALS
 - Create a Start Menu that includes gameplay instructions, and a start button.
