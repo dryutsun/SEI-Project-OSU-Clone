@@ -23,7 +23,7 @@ I will be using HTML and CSS to structure and style the page.
 ## POSSIBLE SCORING MECHANISM
 ![Scoring](./readme_asset/general_mechanisms.png)
 ## GAME BOARD
-![Game Board](./readme_asset/general_mechanisms.png)
+![Game Board](./readme_asset/game_screen.png)
 ## CLICK INDICATOR
 ![Click Indicator](./readme_asset/click_indicator.png)
 
@@ -53,3 +53,6 @@ I will be using HTML and CSS to structure and style the page.
  - Not knowing OOP, I predict I will have difficulty modularizing and extending some of the objects I will be creating.
  - I don't know the full scope of what these rendering frameworks are capable of so I might do something that is not possible within some of them.
  - Not knowing how to register consecutive "events" in the stretch goal such as the 'click-mousedown-drag-click" event.
+
+ - Lay out a grid / so that they can't spawn in the same place.
+- start with it being boxes, and as a stretch goal i can make it circle.
