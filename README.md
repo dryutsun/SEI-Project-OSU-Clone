@@ -22,6 +22,11 @@ I will be using HTML and CSS to structure and style the page.
 ![Contraction Phase](./readme_asset/contraction_phase.png)
 ## POSSIBLE SCORING MECHANISM
 ![Scoring](./readme_asset/general_mechanisms.png)
+## GAME BOARD
+![Game Board](./readme_asset/general_mechanisms.png)
+## CLICK INDICATOR
+![Click Indicator](./readme_asset/click_indicator.png)
+
 
 # MVP GOALS
 - Create a Start Menu that includes gameplay instructions, and a start button.
