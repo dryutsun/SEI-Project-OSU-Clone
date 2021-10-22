@@ -10,8 +10,8 @@ TLDR: Click the circles before the contract into nothingness! You'll be graded u
 
 # Tech Stack:
 I believe I have two options here from the draw area:
-1 - I can use p5.js which has a wealth of documentation and graphic capabilities
-2 - I can use HTML5 Canvas which has similar capabilities, with regard to click events, etcetera.
+- I can use p5.js which has a wealth of documentation and graphic capabilities
+- I can use HTML5 Canvas which has similar capabilities, with regard to click events, etcetera.
 
 I will be using HTML and CSS to structure and style the page.
 
