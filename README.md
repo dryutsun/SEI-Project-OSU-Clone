@@ -41,6 +41,7 @@ I will be using HTML and CSS to structure and style the page.
 - Accuracy Math to indicate where in the circular or square hitbox you clicked, relative to center of the spawned circle.
 - Pattern based spawning of circles, possibly including it in a *map* of possible spawn patterns and randomly choosing one of these patterns.
 - Possible music based spawning of circles, i.e. if sound is within a certain frequency range such as a kick drum, it will spawn points. These points will be predetermined/premapped by some function.
+    - This could possibly be implemented by having the music be a midi file, and have JS track certain midi events.
 
  # ROADBLOCKS
  - I predict I will have some difficulty with the collision detection math. I figure I can render the cursor as a "pixel point" i.e. small, and it it finds itself within the circle while it exists, the collision will be detected.
