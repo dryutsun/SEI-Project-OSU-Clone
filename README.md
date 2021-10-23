@@ -35,7 +35,6 @@ I will be using HTML and CSS to structure and style the page.
 - Render a cursor or cursor indicator on the page.
 - Random spawning of circles that expand and contract their hitboxes over a set duration.
     - When clicked, they dissapear or flash.
-- If circles are clicked consecutively, your largest combo is displayed.
 - After a set amount of time, i.e. 1 minute, the game ends and the score is displayed.
 
 # STRETCH GOALS
@@ -56,3 +55,4 @@ I will be using HTML and CSS to structure and style the page.
 
  - Lay out a grid / so that they can't spawn in the same place.
 - start with it being boxes, and as a stretch goal i can make it circle.
+- If circles are clicked consecutively, your largest combo is displayed.
