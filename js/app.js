@@ -14,11 +14,11 @@ const canvas = document.querySelector('canvas')
 const ctx = canvas.getContext('2d')
 const cursorCenterPos = canvas.width/2
 
-ctx.canvas.globalCompositeOperation = "destination-over"
+// ctx.canvas.globalCompositeOperation = "destination-over"
 // ! Selectors
 scoreBoard = document.querySelector("#score")
 
-ctx.canvas.width = ctx.canvas.height = 512;
+ctx.canvas.width = ctx.canvas.height = 900;
 ctx.canvas.fillStyle = "black"
 ctx.canvas.fillRect = (0,0, canvas.width, canvas.height)
 
@@ -33,20 +33,44 @@ function clickPosition (event) {
     console.log(`You clicked at ${mouseX}, ${mouseY}`)
     
     // ! IMPORTANT: FOR EVERY targetCircle Generated, I need to check if it has been clicked.
-    allTargets.forEach((target) => { 
-        let clickEvent = target.clicked(mouseX, mouseY)
+    // TODO: Rewrite as a for loop since forEach cannot iterate backwards. 
+    // * Because we were iterating through an array that was being spliced, it could not be reindexed correctly.
+    // * Stack Overflow reccomended to iterate backwards. Another solution was to use filter and reassing allTargets to itself.
+    
+    // !The algorithmic complexity of this approach is O(n^2) as splice function and the for loop both iterate over the array (splice function shifts all elements of array in the worst case). Instead you can just push the required elements to the new array and then just assign that array to the desired variable (which was just iterated upon). https://stackoverflow.com/questions/9882284/looping-through-array-and-removing-items-without-breaking-for-loop
+
+
+
+
+
+    for (i = allTargets.length - 1; i >= 0; i--) {
+        let clickEvent = allTargets[i].clicked(mouseX, mouseY)
+        console.log(allTargets)
         if (clickEvent == true) {
             clickScore++
             score.innerText = clickScore
-            console.log(clickScore)
-            allTargets.splice(target, 1) // ! Should I use filter() instead?
+            allTargets.splice(i, 1)
         } else {
-            "You missed."
+            console.log("You missed")
         }
-        // isClicked(target, mouseX, mouseY)
-    })
-    ;
-} 
+        }
+    }
+
+    // allTargets.forEach((target) => { 
+    //     let clickEvent = target.clicked(mouseX, mouseY)
+    //     console.log(allTargets)
+    //     if (clickEvent == true) {
+    //         clickScore++
+    //         score.innerText = clickScore
+    //         console.log(clickScore)
+    //         allTargets.splice(target, 1) // ! Should I use filter() instead?
+    //     } else {
+    //         "You missed."
+    //     }
+    //     // isClicked(target, mouseX, mouseY)
+    // })
+    
+
 
 // function isClicked(target, mouseX, mouseY)
 //      target.x COMPARE mouseX
@@ -137,8 +161,8 @@ function getRandomSpawn(min, max) {
 const allTargets = []
 function spawnTarget() {
     setInterval(() => {
-        const spawnX = getRandomSpawn(0,512)
-        const spawnY = getRandomSpawn(0,512)
+        const spawnX = getRandomSpawn(0,canvas.width)
+        const spawnY = getRandomSpawn(0,canvas.height)
         const r = 20
         const sr = 0
         const er = 2 * Math.PI
@@ -162,6 +186,8 @@ spawnTarget()
 // ! DRAW () (i.e. Gameloop)
 drawGameLoop = () => {
     ctx.clearRect(0, 0, canvas.width, canvas.height)
+    ctx.fillStyle = 'black'
+    ctx.fillRect(0,0,canvas.width, canvas.height)
     let cursor = new aimPointer(mouseX, mouseY, "red", 10, 10)
     cursor.render();    
     allTargets.forEach((target) => {
