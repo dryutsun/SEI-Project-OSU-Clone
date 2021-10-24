@@ -14,48 +14,48 @@ const canvas = document.querySelector('canvas')
 const ctx = canvas.getContext('2d')
 const cursorCenterPos = canvas.width/2
 
-// ctx.strokeStyle = "#342"
-// gridSize = 16
-
-// drawGrid(ctx, gridSize);
-
-// function drawGrid(ctx, size) { // Hoisting this function to the top
-//     const w = ctx.canvas.width;
-//     const h = ctx.canvas.height;
-//     ctx.beginPath();
-//     for (var x=0;x<=w;x+=size){
-//         ctx.moveTo(x-0.5,0);      // 0.5 offset so that 1px lines are crisp
-//         ctx.lineTo(x-0.5,h);
-//     }
-//     for (var y=0;y<=h;y+=size){
-//         ctx.moveTo(0,y-0.5);
-//         ctx.lineTo(w,y-0.5);
-//     }
-//     ctx.stroke();               // Only do this once, not inside the loops
-// }
-
+ctx.canvas.globalCompositeOperation = "destination-over"
+// ! Selectors
+scoreBoard = document.querySelector("#score")
 
 ctx.canvas.width = ctx.canvas.height = 512;
-
-ctx.strokeStyle = "#009"; // Do this once only
-drawGrid(ctx,16);
-
-function drawGrid(ctx,size){
-  var w = ctx.canvas.width,
-      h = ctx.canvas.height;
-  ctx.beginPath();
-  for (var x=0;x<=w;x+=size){
-    ctx.moveTo(x-0.5,0);
-    ctx.lineTo(x-0.5,h);
-  }
-  for (var y=0;y<=h;y+=size){
-    ctx.moveTo(0,y-0.5);
-    ctx.lineTo(w,y-0.5);
-  }
-  ctx.stroke();
-}
+ctx.canvas.fillStyle = "black"
+ctx.canvas.fillRect = (0,0, canvas.width, canvas.height)
 
 
+
+canvas.addEventListener("click", clickPosition)
+
+let clickScore = 0
+
+
+function clickPosition (event) {
+    console.log(`You clicked at ${mouseX}, ${mouseY}`)
+    
+    // ! IMPORTANT: FOR EVERY targetCircle Generated, I need to check if it has been clicked.
+    allTargets.forEach((target) => { 
+        let clickEvent = target.clicked(mouseX, mouseY)
+        if (clickEvent == true) {
+            clickScore++
+            score.innerText = clickScore
+            console.log(clickScore)
+            allTargets.splice(target, 1) // ! Should I use filter() instead?
+        } else {
+            "You missed."
+        }
+        // isClicked(target, mouseX, mouseY)
+    })
+    ;
+} 
+
+// function isClicked(target, mouseX, mouseY)
+//      target.x COMPARE mouseX
+//      target.y COMPARE mouseY
+
+// TODO: Can I abstract out the .clicked function into the event handler instead of each individual targetCircle instance.
+// TODO: Weird bug that clicks multiple circles or double clicked? ! SOLVED
+
+// * object spawning should only be able to be spawned if they are at least two radius's apart from each other.
 
 
 
@@ -78,18 +78,44 @@ function aimPointer(x, y, color, width, height) {
 }
 
 // * CREATE SPAWNING CIRCLES/SQUARES
-function targetSquares(x, y, color, width, height,) { 
+function targetCircles(x, y, r, startRadian, endRadian, color) { 
     this.x = x
     this.y = y
+    this.r = r
+    this.startRadian = startRadian
+    this.endRadian = endRadian * Math.PI
     this.color = color
-    this.height = height
-    this.width = width
-    this.alive = true;
-
+    // ! need to create a max r value that circle r will increment to until it reaches the max
+    // ! then it will decrement until it becomes negative at which point it should be "removed"
+    // ! from the canvas but not in the same way as a successful click does, it should then be
+    // ! stored in a "missed" array.
+    // * RENDERING
     this.render = function() {
+        ctx.beginPath()
+        ctx.arc(this.x, this.y, this.r, this.startRadian, this.endRadian)
         ctx.fillStyle = this.color
-        ctx.fillRect(this.x, this.y, this.width, this.height)
+        ctx.fill()
+        ctx.stroke()
+        ctx.closePath()
     }
+    // * CLICK DETECTION
+    
+    this.clicked = function() { // https://codeboxsystems.com/tutorials/en/how-to-drag-and-drop-objects-javascript-canvas/
+        let x1 = this.x
+        let y1  = this.y
+        console.log(x1, y1)      
+        let distance = Math.sqrt(((mouseX - x1) ** 2) + ((mouseY - y1) ** 2)) // <--- forgot to sqrt lol
+        // distance = 
+        if (distance < this.r) {
+            this.color = "green"
+            return true
+
+        } else {
+            return false
+        }
+    }
+
+
 }
 
 function getRandomSpawn(min, max) {
@@ -99,35 +125,44 @@ function getRandomSpawn(min, max) {
 }
 
 
+
+// ! arc(x, y, radius, startAngle, endAngle, counterclockwise)
+
+
+
+
+
+
 // * SPAWNING MULTIPLE INSTANCES OF TARGETSQUARES
 const allTargets = []
 function spawnTarget() {
     setInterval(() => {
-        const x = getRandomSpawn(0,512)
-        const y = getRandomSpawn(0,512)
-        const color = "red"
-        const h = 25
-        const w = 25
-        allTargets.push(new targetSquares(x, y, color, h, w))
+        const spawnX = getRandomSpawn(0,512)
+        const spawnY = getRandomSpawn(0,512)
+        const r = 20
+        const sr = 0
+        const er = 2 * Math.PI
+        const color = "orange"
+        // ? Do I write the logic for spawn distance here?
+        allTargets.push(new targetCircles(spawnX, spawnY, r, sr, er, color))
     }, 1000)
     console.log(allTargets)
 }
 spawnTarget()
 
 // * CLICK/COLLISION DETECTION
-if (
-    player.x < thing.x + thing.width &&
-    player.x + player.width > thing.x &&
-    player.y < thing.y + thing.height &&
-    player.y + player.height > thing.y &&
-    (clickPosition(true))
-)
+// if (
+//     player.x < thing.x + thing.width &&
+//     player.x + player.width > thing.x &&
+//     player.y < thing.y + thing.height &&
+//     player.y + player.height > thing.y &&
+//     (clickPosition(true))
+// ) 
 
 // ! DRAW () (i.e. Gameloop)
-const drawGameLoop = () => {
+drawGameLoop = () => {
     ctx.clearRect(0, 0, canvas.width, canvas.height)
-    let cursor = new aimPointer(mouseX, mouseY, "red", 2, 2)
-    console.log(cursor)
+    let cursor = new aimPointer(mouseX, mouseY, "red", 10, 10)
     cursor.render();    
     allTargets.forEach((target) => {
         target.render();
@@ -174,14 +209,14 @@ function setMousePosition (event) { // ! Mouse Event to get X & Y Position
 
 
 // ! HELPER FUNCTION TO GET EXACT MOUSE POSITION RELATIVE TO CANVAS
-let getPosition = (curs) => {
+let getPosition = (canvas) => {
     let xPos = 0;
     let yPos = 0;
 
-    while (curs) {
-        xPos += (curs.offsetLeft - curs.scrollLeft + curs.clientLeft)
-        yPos += (curs.offsetTop - curs.scrollTop + curs.clientTop)
-        curs = curs.offsetParent
+    while (canvas) {
+        xPos += (canvas.offsetLeft - canvas.scrollLeft + canvas.clientLeft)
+        yPos += (canvas.offsetTop - canvas.scrollTop + canvas.clientTop)
+        canvas = canvas.offsetParent
     }
 
     return {
@@ -192,9 +227,3 @@ let getPosition = (curs) => {
 
 let canvasPosition = getPosition(canvas)
 
-canvas.addEventListener("click", clickPosition)
-
-function clickPosition (event) {
-    console.log(`You clicked at ${mouseX}, ${mouseY}`)
-    return true
-} 
