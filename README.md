@@ -33,7 +33,7 @@ I will be using HTML and CSS to structure and style the page.
 - After start button is clicked, it will count down till the game actually starts so user can prepare.
 - Render game screen indicating circles clicked, or largest combo. **DONE**
 - Render a cursor or cursor indicator on the page. **DONE** <NEED TO FIX OFFSET >
-- Random spawning of circles that expand and contract their hitboxes over a set duration.
+- Random spawning of circles that expand and contract their hitboxes over a set duration. **DONE**
     - When clicked, they dissapear or flash.
 - After a set amount of time, i.e. 1 minute, the game ends and the score is displayed.
 

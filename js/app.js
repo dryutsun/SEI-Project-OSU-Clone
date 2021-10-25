@@ -17,8 +17,10 @@ const cursorCenterPos = canvas.width / 2
 // ctx.canvas.globalCompositeOperation = "destination-over"
 // ! Selectors
 scoreBoard = document.querySelector("#score")
+missBoard = document.querySelector("#missed")
 
-ctx.canvas.width = ctx.canvas.height = 900;
+ctx.canvas.width = 900;
+ctx.canvas.height = 900; // need to make space for the scoreboard...so everytime canvas.height is invoked - 100?
 // ctx.canvas.fillStyle = "black"
 // ctx.canvas.fillRect = (0,0, canvas.width, canvas.height)
 
@@ -46,13 +48,16 @@ function clickPosition(event) {
 
     for (i = allTargets.length - 1; i >= 0; i--) {
         let clickEvent = allTargets[i].clicked(mouseX, mouseY)
-        let minGrowth = allTargets[i].r
         if (clickEvent == true) {
             clickScore++
             score.innerText = clickScore
             myPlay();
             allTargets.splice(i, 1)
-        }
+        } // } else if (allTargets[i].update == false) { // * needs to be in a rendering space not click event handler
+        //     allTargets.splice(i, 1)
+        //     missTargets.push(i)
+        //     console.log(missTargets)
+        // }
 
         // } else if (allTargets[i].r == 1) {
         //     allTargets.splice(i, 1)
@@ -102,7 +107,7 @@ function targetCircles(x, y, r, startRadian, endRadian, color) {
     this.endRadian = endRadian * Math.PI
     this.color = color
     this.growing = true;
-    this.growingAmount = .25
+    this.growingAmount = .75
 
 
     this.draw = function () {
@@ -133,11 +138,14 @@ function targetCircles(x, y, r, startRadian, endRadian, color) {
     }
 
     this.update = function () {
+        // ! State is set to true so it will grow.
+        // ! when it reaches 50 it will change to false and start shrinking
+        // ! I should then have it decrement.
         if (this.r > 50) {
-            this.growing = false;
+            this.growing = false;  
         }
-        if (this.r < 1) {
-            this.growing = true;
+        else if (this.r < 2) {
+            return true;
         }
         if (this.growing == true) {
             this.r += this.growingAmount
@@ -189,7 +197,7 @@ function spawnTarget() {
         const er = 2 * Math.PI
         const color = "red"
         let growthMax = 25
-        let growthMin = 0.1
+        let growthMin = 1
         // ? Do I write the logic for spawn distance here?
         let newTargetCircle = new targetCircles(spawnX, spawnY, r, sr, er, color, growthMax, growthMin)
         allTargets.push(newTargetCircle)
@@ -203,6 +211,11 @@ function spawnTarget() {
     console.log(allTargets)
 }
 spawnTarget()
+
+
+const missTargets = []
+
+
 
 // * CLICK/COLLISION DETECTION
 // if (
@@ -225,7 +238,13 @@ drawGameLoop = () => {
     allTargets.forEach((target) => {
         target.draw();
         target.update();
-    })
+        if (target.r == 2) { 
+            allTargets.splice(target, 1)
+            missTargets.push(target)
+            console.log(missTargets)
+            missBoard.innerText = missTargets.length 
+        }
+        })
 
 
     // console.log(mouseX, mouseY)
