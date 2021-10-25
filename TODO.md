@@ -20,11 +20,17 @@
 - have box follow mouse pos & adjust for offset DONE
 - render click box/circle DONE
 - randomly spawn circles in interval DONE
-- 
+- NEED TO MAKE EXPANSION AND CONTRACTION FUNCTION
+        - COULD IMPLEMENT THIS AS A SET INTERVAL OF GROWTH FROM 0 UP TO CERTAIN LIMIT.
+        - AFTER CERTAIN LIMIT IT SHRINKS
+        - WILL THIS CONFLICT WITH THE REDRAW OF ELEMENTS?
 
 ## TO EXPLORE:
 how to do i create an animation after a succesful "collision/click" event is solved
 how do i create a global duration counter without interfering with the canvas animation rate
+- https://stackoverflow.com/questions/36815987/use-js-countdown-timer-in-canvas-with-requestanimationframe
+- http://blog.wolfire.com/2009/07/linear-algebra-for-game-developers-part-1/
+
 
 
 ## CODE INTERACTION LOGIC:
@@ -57,3 +63,19 @@ Store each successful click in an array:
 ### STRUCTURE NOTES:
 - create an equal grid of 50x50 or 25x25 squares on grid (Fill RECT?)
 - 
+
+
+if (c > 50) {
+growing = false;
+}
+if (c < 0) {
+growing = true;
+}
+
+if (growing == true) {
+d += growingAmount
+c += growingAmount
+} else {
+c -= growingAmount
+d -= growingAmount
+}  
