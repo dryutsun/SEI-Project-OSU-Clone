@@ -44,14 +44,15 @@ function clickPosition(event) {
         audio.play();
     }
 
-    function checkState(){
     for (i = allTargets.length - 1; i >= 0; i--) {
         let clickEvent = allTargets[i].clicked(mouseX, mouseY)
         let minGrowth = allTargets[i].r
         if (clickEvent == true) {
             clickScore++
             score.innerText = clickScore
-            myPlay();}
+            myPlay();
+            allTargets.splice(i, 1)
+        }
 
         // } else if (allTargets[i].r == 1) {
         //     allTargets.splice(i, 1)
@@ -59,22 +60,8 @@ function clickPosition(event) {
         // }
     }
 
+
 }
-
-
-// allTargets.forEach((target) => { 
-//     let clickEvent = target.clicked(mouseX, mouseY)
-//     console.log(allTargets)
-//     if (clickEvent == true) {
-//         clickScore++
-//         score.innerText = clickScore
-//         console.log(clickScore)
-//         allTargets.splice(target, 1) // ! Should I use filter() instead?
-//     } else {
-//         "You missed."
-//     }
-//     // isClicked(target, mouseX, mouseY)
-// })
 
 
 
@@ -115,7 +102,7 @@ function targetCircles(x, y, r, startRadian, endRadian, color) {
     this.endRadian = endRadian * Math.PI
     this.color = color
     this.growing = true;
-    this.growingAmount = .025
+    this.growingAmount = .25
 
 
     this.draw = function () {
@@ -240,6 +227,7 @@ drawGameLoop = () => {
         target.update();
     })
 
+
     // console.log(mouseX, mouseY)
 
 
@@ -304,4 +292,3 @@ let getPosition = (canvas) => {
     }
 }
 let canvasPosition = getPosition(canvas)
-    }
