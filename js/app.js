@@ -18,6 +18,7 @@ const cursorCenterPos = canvas.width / 2
 // ! Selectors
 scoreBoard = document.querySelector("#score")
 missBoard = document.querySelector("#missed")
+timeBoard = document.querySelector("#time-remaining")
 
 // Setting Max Width
 ctx.canvas.width = 900;
@@ -163,7 +164,7 @@ function startGame() {
         this.y = y
         this.r = r
         this.startRadian = startRadian
-        this.endRadian = endRadian * Math.PI
+        this.endRadian = endRadian 
         this.color = color
         this.growing = true;
         this.growingAmount = .75
@@ -241,7 +242,7 @@ function startGame() {
         this.y = y
         this.r = r
         this.startRadian = startRadian 
-        this.endRadian = endRadian * Math.PI
+        this.endRadian = endRadian 
         this.color = getRandomFireColor()
 
         this.draw = function () {
@@ -281,9 +282,10 @@ function startGame() {
         console.log(allTargets)
     }
     spawnTarget()
+    let animation;
     // ! DRAW () (i.e. Gameloop) // * WHAT IS THE REFRESH RATE?
     drawGameLoop = () => { 
-        requestAnimationFrame(drawGameLoop);
+        animation = requestAnimationFrame(drawGameLoop);
         // ctx.clearRect(0, 0, canvas.width, canvas.height)
         myBlack = "rgba(0, 0, 0, 0.1)" // Opacity maybe creating ghosting 
         ctx.fillStyle = myBlack
@@ -303,7 +305,27 @@ function startGame() {
     }
     drawGameLoop();
 
-    // ! FPS/INTERVAL SPEED
+    //! COUNTDOWN CLOCK
+    function countDownTimer () {
+        let oneMinute = 10
+        setInterval(() => {
+            timeBoard.innerText = oneMinute.toString()
+            oneMinute--
+
+            if (oneMinute <= 0) {
+                timeBoard.innerText = "Times Up."
+                clearInterval(countDownTimer)
+                cancelAnimationFrame(animation)
+            }
+        }, 1000);
+
+    }
+
+
+countDownTimer();
+
+
+    //! END GAME LOOP
 
 
 

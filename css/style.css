@@ -19,6 +19,10 @@ canvas {
     font-size: 40px;
 }
 
+#time-remaining {
+    font-size: 40px;
+}
+
 #missed {
     font-size: 40px;
 }

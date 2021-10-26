@@ -29,13 +29,14 @@ I will be using HTML and CSS to structure and style the page.
 
 
 # MVP GOALS
-- Create a Start Menu that includes gameplay instructions, and a start button.
-- After start button is clicked, it will count down till the game actually starts so user can prepare.
+- Create a Start Menu that includes gameplay instructions, and a start button. **DONE**
+- After start button is clicked, it will count down till the game actually starts so user can prepare.  *DONE*
 - Render game screen indicating circles clicked, or largest combo. **DONE**
-- Render a cursor or cursor indicator on the page. **DONE** <NEED TO FIX OFFSET >
+- Render a cursor or cursor indicator on the page. **DONE** 
 - Random spawning of circles that expand and contract their hitboxes over a set duration. **DONE**
     - When clicked, they dissapear or flash. **DONE**
 - After a set amount of time, i.e. 1 minute, the game ends and the score is displayed. 
+    - set interval to count up to 60 and once it is 60, clearinterval
 
 # STRETCH GOALS
 - Make it look nice and come up with general styling outline for graphic enjoyment. 
