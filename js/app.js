@@ -43,9 +43,7 @@ ctx.fillText('Press Spacebar to Start!', canvas.width / 2, canvas.height / 1.5);
 
 // Countdown Timer
 function countDown() {
-    // ctx.fillStyle = "#000000"
-    // ctx.font = "24px Fira Mono"
-    // ctx.textAlign = 'center';
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
     setTimeout(() => {
         ctx.clearRect(0, 0, canvas.width, canvas.height)
         ctx.fillStyle = "#000000"
@@ -72,8 +70,13 @@ function countDown() {
 }
 // Keyboard Event Listener
 ctx.canvas.addEventListener('keydown', (event)=>{
-    if (event.keyCode == '65') {
+    if (event.keyCode == '32 ') {
         console.log("Spacebar Pressed")
+        oneMinute = 60
+        clickScore = 0
+        missedTargets = []
+        allTargets = []
+        timeBoard.innerText = 60;
         countDown()
         // startGame();
     }
@@ -130,7 +133,7 @@ function startGame() {
 
     }
 
-    const missTargets = []
+
 
     // Creating a Cursor Object so That the user can meaningfully see where they are.
 
@@ -282,6 +285,7 @@ function startGame() {
         console.log(allTargets)
     }
     spawnTarget()
+    let missTargets = []
     let animation;
     // ! DRAW () (i.e. Gameloop) // * WHAT IS THE REFRESH RATE?
     drawGameLoop = () => { 
@@ -305,29 +309,45 @@ function startGame() {
     }
     drawGameLoop();
 
+
     //! COUNTDOWN CLOCK
     function countDownTimer () {
-        let oneMinute = 10
+        let oneMinute = 60
         setInterval(() => {
+    
             timeBoard.innerText = oneMinute.toString()
-            oneMinute--
-
-            if (oneMinute <= 0) {
-                timeBoard.innerText = "Times Up."
+            if (oneMinute <= 0) { //! If it is still 0 will keep running engamemenu
                 clearInterval(countDownTimer)
-                cancelAnimationFrame(animation)
-            }
-        }, 1000);
+                }
+                oneMinute--
+            }, 1000);
 
+        setTimeout(()=> {
+            endGameMenu()
+            cancelAnimationFrame(animation)
+        }, 60000)
+    
     }
 
 
-countDownTimer();
 
 
-    //! END GAME LOOP
 
 
+    countDownTimer();
+
+    //! END GAME MENU
+    function endGameMenu(){
+
+        ctx.fillStyle = "#FFFFFF"
+        ctx.font = "40px Fira Mono"
+        ctx.textAlign = 'center';
+        ctx.fillText(`Your Score Was: ${clickScore}`, canvas.width / 2, canvas.height / 3);
+        ctx.fillText(`Your Missed: ${missTargets.length} times.`, canvas.width / 2, canvas.height / 2);
+        ctx.fillText(`Press Spacebar to Play again.`, canvas.width / 2, canvas.height / 1.5);
+        console.log("I am being run again...")
+        
+    }
 
 
     // ! UPDATE()
