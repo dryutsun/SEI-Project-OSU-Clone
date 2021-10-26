@@ -34,18 +34,28 @@ I will be using HTML and CSS to structure and style the page.
 - Render game screen indicating circles clicked, or largest combo. **DONE**
 - Render a cursor or cursor indicator on the page. **DONE** <NEED TO FIX OFFSET >
 - Random spawning of circles that expand and contract their hitboxes over a set duration. **DONE**
-    - When clicked, they dissapear or flash.
-- After a set amount of time, i.e. 1 minute, the game ends and the score is displayed.
+    - When clicked, they dissapear or flash. **DONE**
+- After a set amount of time, i.e. 1 minute, the game ends and the score is displayed. 
 
 # STRETCH GOALS
 - Make it look nice and come up with general styling outline for graphic enjoyment. 
 - Particle effects or an "explosion" for when circles are successfully clicked.
-- In addition to the expansion/contraction phase, certain spawned circles should be connected by a "bridge" that takes a mousedown dragging effect.
+- In addition to the expansion/contraction phase, certain spawned circles should be connected by a "bridge" that takes a mousedown dragging effect. !! THIS WOULD REQUIRE SPLINES. IM TOO DUMB FOR SPLINES.
     - If the cursor leaves the rendered "bridge" between two circles, you cannot proceed with the click-mousedown-drag-click event. If you miss the event, you will only lose the opportunity to have an attached "bonus"
+
+
 - Accuracy Math to indicate where in the circular or square hitbox you clicked, relative to center of the spawned circle.
+
 - Pattern based spawning of circles, possibly including it in a *map* of possible spawn patterns and randomly choosing one of these patterns.
+
 - Possible music based spawning of circles, i.e. if sound is within a certain frequency range such as a kick drum, it will spawn points. These points will be predetermined/premapped by some function.
     - This could possibly be implemented by having the music be a midi file, and have JS track certain midi events.
+    - PER MY BESTIES ADVICE: Take an audio objects
+//! you give it a sample rate;
+//! take less samples, ever 2 ms u sample ur singal
+//! simple boolean greater than operator saying if its above this
+//! Notices when something changes from a 1 to a 0
+//! Some typee of smoothing, a 1 bang that is a gate that only lets something thru every x ms
 
  # ROADBLOCKS
  - I predict I will have some difficulty with the collision detection math. I figure I can render the cursor as a "pixel point" i.e. small, and it it finds itself within the circle while it exists, the collision will be detected.

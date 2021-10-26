@@ -1,7 +1,7 @@
 # PSEUDOCODE/TODO
 
 ### Render Menu
-[ ] - create a menu in canvas <-- to research
+[ ] - create a menu in canvas <-- to research *DONE*
 [ ] - set countdown that triggers event state
 [ ] - 
 
@@ -79,3 +79,22 @@ c += growingAmount
 c -= growingAmount
 d -= growingAmount
 }  
+
+
+
+    // let canvasRenderInterval= setInterval(drawGameLoop, 500)
+
+
+
+    // ! Fourier, but actually finding transients ??
+    // ! converts something  at an audio rate signal into a more manage thing
+    //! smoothing the sampling, and letting the thing know when the event has passed.
+    // envelope following
+
+    //! Take an audio objects
+    //! you give it a sample rate;
+    //! take less samples, ever 2 ms u sample ur singal
+    //! simple boolean greater than operator saying if its above this
+    //! Notices when something changes from a 1 to a 0
+    //! Some typee of smoothing, a 1 bang that is a gate that only lets something thru every x ms
+    //! https://docs.cycling74.com/max7/tutorials/09_dynamicschapter01
