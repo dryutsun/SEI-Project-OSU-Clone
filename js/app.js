@@ -227,7 +227,7 @@ function startGame() {
     function getRandomSpawn(min, max) {
         min = Math.ceil(min)
         max = Math.floor(max)
-        return Math.floor(Math.random() * (max - min) + min)
+        return Math.floor(Math.random() * (max - min) + min) // * get to spawn in borders
     }
 
     // * PARTICLE COLOR RANDOMIZER
@@ -269,8 +269,8 @@ function startGame() {
     const allTargets = [] // the array is local to this particular startGame so can be accessed
     function spawnTarget() {
         setInterval(() => {
-            const spawnX = getRandomSpawn(0, canvas.width)
-            const spawnY = getRandomSpawn(0, canvas.height)
+            const spawnX = getRandomSpawn(5, canvas.width-5)
+            const spawnY = getRandomSpawn(5, canvas.height-5)
             let r = 20
             const sr = 0
             const er = 2 * Math.PI
@@ -313,11 +313,11 @@ function startGame() {
     //! COUNTDOWN CLOCK
     function countDownTimer () {
         let oneMinute = 60
-        setInterval(() => {
+        let countDownClock = setInterval(() => {
     
             timeBoard.innerText = oneMinute.toString()
             if (oneMinute <= 0) { //! If it is still 0 will keep running engamemenu
-                clearInterval(countDownTimer)
+                clearInterval(countDownClock)
                 }
                 oneMinute--
             }, 1000);
@@ -325,6 +325,7 @@ function startGame() {
         setTimeout(()=> {
             endGameMenu()
             cancelAnimationFrame(animation)
+
         }, 60000)
     
     }
