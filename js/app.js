@@ -109,17 +109,15 @@ function startGame() {
                 particlex = allTargets[i].x // makes the particle effect focus on center of circleTarget
                 particley = allTargets[i].y // makes particle effect focus on center of CircleTarget
                 particleAmount = 100
-                // ! Particle Effect
+                // ! Particle Effect NOTE: I did not figure out this math myself :dead:
                 const circularIncrementation = Math.PI * 2 / particleAmount
                 for (let i = 0; i < particleAmount; i++) {
-                    particleArray.push(new clickParticles(particlex, particley, 1, `rgba(255, 0, 0, 1)`, {
+                    particleArray.push(new clickParticles(particlex, particley, 1, `rgb(255,165,0)`, {
                         x: Math.cos(circularIncrementation * i),
                         y: Math.sin(circularIncrementation * i)
                     }))
-                    setInterval(() => {
-                        particleArray.splice(particleAmount[i], 1);
-                    }, 10000);
                 }
+
                 allTargets.splice(i, 1)
                 
 
@@ -127,6 +125,9 @@ function startGame() {
         }
     }
 
+  setTimeout(()=>{
+            particleArray.splice(i, 1) // make it leave array after certain interval
+    }, 3000)
 
 
     // Creating a Cursor Object so That the user can meaningfully see where they are.
@@ -294,8 +295,11 @@ function startGame() {
                 missBoard.innerText = missTargets.length 
             }
             })
-        particleArray.forEach((particle)=>{
+        particleArray.forEach((particle)=>{ // Need to discover some logic like radial expansion that will allow me to splice the particle after certain time...
             particle.update()
+            setTimeout(()=>{
+                particleArray.splice(i, 1) // make it leave array after certain interval
+            }, 3000)
         })
     
     }
