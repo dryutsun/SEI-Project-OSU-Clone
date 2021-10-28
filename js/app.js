@@ -109,7 +109,6 @@ function startGame() {
                 particlex = allTargets[i].x // makes the particle effect focus on center of circleTarget
                 particley = allTargets[i].y // makes particle effect focus on center of CircleTarget
                 particleAmount = 100
-                // ! Particle Effect NOTE: I did not figure out this math myself :dead:
                 const circularIncrementation = Math.PI * 2 / particleAmount
                 for (let i = 0; i < particleAmount; i++) {
                     particleArray.push(new clickParticles(particlex, particley, 1, `rgb(255,165,0)`, {
@@ -219,27 +218,32 @@ function startGame() {
 
     // TODO: PARTICLE EFFECTS
     particleArray = []
-    function clickParticles(x, y, r, color, velocity) {
+    function clickParticles(x, y, r, color, velocity, alpha) {
         this.x = x
         this.y = y
         this.r = r
         this.velocity = velocity
         this.color = color
+        this.alpha = 1
  
 
         this.draw = function () {
+            ctx.save()
+            ctx.globalAlpha = this.alpha
             ctx.beginPath()
             ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2, false)
             ctx.fillStyle = this.color
             ctx.fill()
             ctx.stroke()
             ctx.closePath()
+            ctx.restore()
         }
 
         this.update = function (){
             this.draw()
-            this.x += this.velocity.x // will send a particle from the center of the circle
+            this.x += this.velocity.x // will send a particle from the center of the circle defined in circleTarget
             this.y += this.velocity.y // will send a particle from the center of the circle
+            this.alpha -= 0.007
             // if (this.alpha > .9) {
             //     this.fading = true
             // } else if (this.alpha < .01) {
@@ -275,7 +279,8 @@ function startGame() {
     spawnTarget()
     let missTargets = []
     let animation;
-    // ! DRAW () 
+
+// ! DRAW () 
     drawGameLoop = () => { 
         animation = requestAnimationFrame(drawGameLoop);
         // ctx.clearRect(0, 0, canvas.width, canvas.height)
@@ -296,17 +301,19 @@ function startGame() {
             }
             })
         particleArray.forEach((particle)=>{ // Need to discover some logic like radial expansion that will allow me to splice the particle after certain time...
+            if (particle.alpha > 0) {
             particle.update()
-            setTimeout(()=>{
-                particleArray.splice(i, 1) // make it leave array after certain interval
-            }, 3000)
+            } else {
+            particleArray.splice(i, 1)
+            }
+
         })
     
     }
     drawGameLoop();
 
 
-    //! COUNTDOWN CLOCK
+//! COUNTDOWN CLOCK
     function countDownTimer () {
         let oneMinute = 60
         let countDownClock = setInterval(() => {
@@ -328,7 +335,7 @@ function startGame() {
 
     countDownTimer();
 
-    //! END GAME MENU
+//! END GAME MENU
     function endGameMenu(){
 
         ctx.fillStyle = "#FFFFFF"
@@ -341,7 +348,7 @@ function startGame() {
         
     }
 
-    // ! MOVEMENT FUNCTIONS
+// ! MOVEMENT FUNCTIONS
     var mouseX = 0;
     var mouseY = 0;
     canvas.addEventListener("mousemove", setMousePosition, false)
@@ -351,7 +358,7 @@ function startGame() {
         mouseY = event.clientY - canvasPosition.y;
     }
 
-    // ! HELPER FUNCTION TO GET EXACT MOUSE POSITION RELATIVE TO CANVAS
+// ! HELPER FUNCTION TO GET EXACT MOUSE POSITION RELATIVE TO CANVAS
     let getPosition = (canvas) => {
         let xPos = 0;
         let yPos = 0;
