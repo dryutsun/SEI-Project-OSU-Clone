@@ -3,8 +3,6 @@ canvas {
     cursor:cell;
 }
 
-#canvas-container {}
-
 *{
         border: 1px dotted red;
 }

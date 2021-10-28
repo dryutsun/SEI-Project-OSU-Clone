@@ -1,7 +1,3 @@
-// ! MAIN STRUCTURES:
-// ! INITIAL STATE
-
-
 // ! Canvas Created
 const canvas = document.querySelector('canvas')
 
@@ -110,36 +106,32 @@ function startGame() {
                 clickScore++
                 score.innerText = clickScore
                 clickPlay();
+                particlex = allTargets[i].x // makes the particle effect focus on center of circleTarget
+                particley = allTargets[i].y // makes particle effect focus on center of CircleTarget
+                particleAmount = 100
+                // ! Particle Effect
+                const circularIncrementation = Math.PI * 2 / particleAmount
+                for (let i = 0; i < particleAmount; i++) {
+                    particleArray.push(new clickParticles(particlex, particley, 1, `rgba(255, 0, 0, 1)`, {
+                        x: Math.cos(circularIncrementation * i),
+                        y: Math.sin(circularIncrementation * i)
+                    }))
+                    setInterval(() => {
+                        particleArray.splice(particleAmount[i], 1);
+                    }, 10000);
+                }
                 allTargets.splice(i, 1)
+                
 
-            } // } else if (allTargets[i].update == false) { // * needs to be in a rendering space not click event handler
-            //     allTargets.splice(i, 1)
-            //     missTargets.push(i)
-            //     console.log(missTargets)
-            // }
-
-            // } else if (allTargets[i].r == 1) {
-            //     allTargets.splice(i, 1)
-            //     console.log("You missed")
-            // }
+            } 
         }
-                // for (i = 0; i < 200; i++){
-                //     r = 2;
-                //     const sr = 0
-                //     const er = 2 * Math.PI
-                //     particleArray.push(new clickParticles(mouseX, mouseY, r, sr, er, getRandomFireColor))
-                //     console.log(particleArray)
-                // }
-
     }
 
 
 
     // Creating a Cursor Object so That the user can meaningfully see where they are.
 
-    // function isClicked(target, mouseX, mouseY)
-    //      target.x COMPARE mouseX
-    //      target.y COMPARE mouseY
+
     // TODO: object spawning should only be able to be spawned if they are at least two max radius's apart from each other.
 
 
@@ -152,9 +144,7 @@ function startGame() {
         this.color = color
         this.height = height
         this.width = width
-
         // * Object Methods
-
         this.draw = function () {
             ctx.fillStyle = this.color
             ctx.fillRect(this.x, this.y, this.width, this.height)
@@ -172,13 +162,10 @@ function startGame() {
         this.growing = true;
         this.growingAmount = .75
 
-
         this.draw = function () {
             ctx.beginPath()
             ctx.arc(this.x, this.y, this.r, this.startRadian, this.endRadian)
             ctx.fillStyle = this.color
-
-
             ctx.fill()
             ctx.stroke()
             ctx.closePath()
@@ -187,8 +174,7 @@ function startGame() {
         this.clicked = function () {
             let x1 = this.x
             let y1 = this.y
-            console.log(x1, y1)
-            // ! sqrt(A*2 - B*2) Pythagorean    
+            console.log(x1, y1)  
             let distance = Math.sqrt(((mouseX - x1) ** 2) + ((mouseY - y1) ** 2)) // <--- forgot to sqrt lol
             // distance = 
             if (distance < this.r) {
@@ -197,15 +183,11 @@ function startGame() {
                 return false
             }
 
-            // ! BIG QUESTIONS: IF I CAN GET THE DISTANCE, AND IF DISTANCE IS LESS THAN RADIUS, HOW DO I GET HOW FAR IT IS FROM THE CENTER POINT
-            // ! I.E. THIS.R DETERMINES HOW BIG THE CIRCLE IS BUT, X1 Y1 DETERMINE WHERE THE CENTER OF THE CIRCLE IS
-            // ! WHAT IS THE DISTANCE BETWEEN THE TWO POINTS AND WHAT IS THAT A RATIO OF?
         }
 
         this.update = function () {
             // ! State is set to true so it will grow.
             // ! when it reaches 50 it will change to false and start shrinking
-            // ! I should then have it decrement.
             if (this.r > 50) {
                 this.growing = false;  
             }
@@ -217,11 +199,7 @@ function startGame() {
             } else {
                 this.r -= this.growingAmount
             }
-
-
         }
-
-
     }
     // * RANDOMIZER FUNCTION
     function getRandomSpawn(min, max) {
@@ -240,37 +218,46 @@ function startGame() {
 
     // TODO: PARTICLE EFFECTS
     particleArray = []
-    function clickParticles(x, y, r, startRadian, endRadian, getRandomFireColor) {
+    function clickParticles(x, y, r, color, velocity) {
         this.x = x
         this.y = y
         this.r = r
-        this.startRadian = startRadian 
-        this.endRadian = endRadian 
-        this.color = getRandomFireColor()
+        this.velocity = velocity
+        this.color = color
+ 
 
         this.draw = function () {
             ctx.beginPath()
-            ctx.arc(this.x, this.y, this.r, this.startRadian, this.endRadian)
+            ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2, false)
             ctx.fillStyle = this.color
-
-
             ctx.fill()
             ctx.stroke()
             ctx.closePath()
         }
 
         this.update = function (){
+            this.draw()
+            this.x += this.velocity.x // will send a particle from the center of the circle
+            this.y += this.velocity.y // will send a particle from the center of the circle
+            // if (this.alpha > .9) {
+            //     this.fading = true
+            // } else if (this.alpha < .01) {
+            //     this.fading = false
+            // }
+
+            // if (this.fading == true) {
+            //     this.alpha -= this.fading
+            // }
 
         }
     }
-
 
     // * SPAWNING MULTIPLE INSTANCES OF TARGETSQUARES
     const allTargets = [] // the array is local to this particular startGame so can be accessed
     function spawnTarget() {
         setInterval(() => {
-            const spawnX = getRandomSpawn(5, canvas.width-5)
-            const spawnY = getRandomSpawn(5, canvas.height-5)
+            const spawnX = getRandomSpawn(20, canvas.width-20)
+            const spawnY = getRandomSpawn(20, canvas.height-20)
             let r = 20
             const sr = 0
             const er = 2 * Math.PI
@@ -287,7 +274,7 @@ function startGame() {
     spawnTarget()
     let missTargets = []
     let animation;
-    // ! DRAW () (i.e. Gameloop) // * WHAT IS THE REFRESH RATE?
+    // ! DRAW () 
     drawGameLoop = () => { 
         animation = requestAnimationFrame(drawGameLoop);
         // ctx.clearRect(0, 0, canvas.width, canvas.height)
@@ -296,6 +283,7 @@ function startGame() {
         ctx.fillRect(0, 0, canvas.width, canvas.height)
         let cursor = new aimPointer(mouseX, mouseY, "green", 10, 10)
         cursor.draw();
+        // * Target Draw
         allTargets.forEach((target) => {
             target.draw();
             target.update();
@@ -306,6 +294,10 @@ function startGame() {
                 missBoard.innerText = missTargets.length 
             }
             })
+        particleArray.forEach((particle)=>{
+            particle.update()
+        })
+    
     }
     drawGameLoop();
 
@@ -330,11 +322,6 @@ function startGame() {
     
     }
 
-
-
-
-
-
     countDownTimer();
 
     //! END GAME MENU
@@ -350,19 +337,15 @@ function startGame() {
         
     }
 
-
-    // ! UPDATE()
     // ! MOVEMENT FUNCTIONS
     var mouseX = 0;
     var mouseY = 0;
     canvas.addEventListener("mousemove", setMousePosition, false)
 
-
     function setMousePosition(event) { // ! Mouse Event to get X & Y Position
         mouseX = event.clientX - canvasPosition.x;
         mouseY = event.clientY - canvasPosition.y;
     }
-
 
     // ! HELPER FUNCTION TO GET EXACT MOUSE POSITION RELATIVE TO CANVAS
     let getPosition = (canvas) => {
