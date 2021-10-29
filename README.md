@@ -1,6 +1,8 @@
 # SEI-Project-OSU-Clone
 This is where I am storing my SEI Project One work.
 
+https://dryutsun.github.io/SEI-Project-OSU-Clone/
+
 # About The Game:
 Do you struggle targeting the right line in your IDE? Can't play first person shooter games very well? Want to increase your actions per minute in starcraft or have no sense of rhythm?
 Introducing, SEI-OSU-CLONE, based upon the very popular game OSU which has attracted rhythm game and anime enthusiasts of all stripes across the internet! SEI-OSU-CLONE combines the rhythmic
