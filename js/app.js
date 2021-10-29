@@ -25,16 +25,16 @@ let clickScore = 0
 // ! BEGINNING OF GAME
 // Game Menu
 function menu () {
-ctx.fillStyle = "#000000"
-ctx.font = "24px Fira Mono"
-ctx.textAlign = 'center';
-ctx.fillText('OSU CLONE', canvas.width / 2, canvas.height / 4);
-// ctx.font = "24px Fira Mono";
-ctx.font = "20px Fira Mono";
-ctx.textAlign = 'center';
-ctx.fillText('Click on the circles as before they dissapear on the screen!', canvas.width / 2, canvas.height / 2);
-ctx.textAlign = 'center';
-ctx.fillText('Press Spacebar to Start!', canvas.width / 2, canvas.height / 1.5);
+    ctx.fillStyle = "#000000"
+    ctx.font = "24px Fira Mono"
+    ctx.textAlign = 'center';
+    ctx.fillText('OSU CLONE', canvas.width / 2, canvas.height / 4);
+    // ctx.font = "24px Fira Mono";
+    ctx.font = "20px Fira Mono";
+    ctx.textAlign = 'center';
+    ctx.fillText('Click on the circles as before they dissapear on the screen!', canvas.width / 2, canvas.height / 2);
+    ctx.textAlign = 'center';
+    ctx.fillText('Press Spacebar to Start!', canvas.width / 2, canvas.height / 1.5);
 }
 
 // Countdown Timer
@@ -110,10 +110,10 @@ function startGame() {
                 clickPlay();
                 particlex = allTargets[i].x // makes the particle effect focus on center of circleTarget
                 particley = allTargets[i].y // makes particle effect focus on center of CircleTarget
-                particleAmount = 50
+                particleAmount = 400
                 const circularIncrementation = Math.PI * 2 / particleAmount
                 for (let i = 0; i < particleAmount; i++) {
-                    particleArray.push(new clickParticles(particlex, particley, 1, `rgb(108, 117, 240)`, {
+                    particleArray.push(new clickParticles(particlex, particley, 2, `rgb(108, 117, 240)`, {
                         x: Math.cos(circularIncrementation * i),
                         y: Math.sin(circularIncrementation * i)
                     }))
