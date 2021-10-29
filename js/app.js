@@ -73,6 +73,8 @@ ctx.canvas.addEventListener('keydown', (event)=>{
         missedTargets = []
         allTargets = []
         timeBoard.innerText = 60;
+        let enoAudio = new Audio("assets/ST.mp3");
+        enoAudio.play();
         countDown()
         // startGame();
     }
@@ -96,7 +98,7 @@ function startGame() {
         // !The algorithmic complexity of this approach is O(n^2) as splice function and the for loop both iterate over the array (splice function shifts all elements of array in the worst case). Instead you can just push the required elements to the new array and then just assign that array to the desired variable (which was just iterated upon). https://stackoverflow.com/questions/9882284/looping-through-array-and-removing-items-without-breaking-for-loop
 
         function clickPlay() {
-            var audio = new Audio("/assets/clicksound.mp3");
+            let audio = new Audio("assets/Water-Blup.mp3");
             audio.play();
         }
 
@@ -108,10 +110,10 @@ function startGame() {
                 clickPlay();
                 particlex = allTargets[i].x // makes the particle effect focus on center of circleTarget
                 particley = allTargets[i].y // makes particle effect focus on center of CircleTarget
-                particleAmount = 100
+                particleAmount = 50
                 const circularIncrementation = Math.PI * 2 / particleAmount
                 for (let i = 0; i < particleAmount; i++) {
-                    particleArray.push(new clickParticles(particlex, particley, 1, `rgb(255,165,0)`, {
+                    particleArray.push(new clickParticles(particlex, particley, 1, `rgb(108, 117, 240)`, {
                         x: Math.cos(circularIncrementation * i),
                         y: Math.sin(circularIncrementation * i)
                     }))
@@ -123,16 +125,10 @@ function startGame() {
             } 
         }
     }
-
-  setTimeout(()=>{
-            particleArray.splice(i, 1) // make it leave array after certain interval
-    }, 3000)
-
-
     // Creating a Cursor Object so That the user can meaningfully see where they are.
 
 
-    // TODO: object spawning should only be able to be spawned if they are at least two max radius's apart from each other.
+    // TODO: object spawning should only be able to be spawned if they are at least two max radius's apart from each other. <-- STRETCH
 
 
     // ! OBJECT CLASSES
@@ -160,14 +156,15 @@ function startGame() {
         this.endRadian = endRadian 
         this.color = color
         this.growing = true;
-        this.growingAmount = .75
+        this.growingAmount = .50
 
         this.draw = function () {
             ctx.beginPath()
             ctx.arc(this.x, this.y, this.r, this.startRadian, this.endRadian)
             ctx.fillStyle = this.color
             ctx.fill()
-            ctx.stroke()
+            // // ctx.strokeStyle = 'blue';
+            // ctx.stroke()
             ctx.closePath()
         }
 
@@ -234,7 +231,6 @@ function startGame() {
             ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2, false)
             ctx.fillStyle = this.color
             ctx.fill()
-            ctx.stroke()
             ctx.closePath()
             ctx.restore()
         }
@@ -243,7 +239,7 @@ function startGame() {
             this.draw()
             this.x += this.velocity.x // will send a particle from the center of the circle defined in circleTarget
             this.y += this.velocity.y // will send a particle from the center of the circle
-            this.alpha -= 0.007
+            this.alpha -= 0.0099
             // if (this.alpha > .9) {
             //     this.fading = true
             // } else if (this.alpha < .01) {
@@ -266,13 +262,13 @@ function startGame() {
             let r = 20
             const sr = 0
             const er = 2 * Math.PI
-            const color = "red"
+            const color = "rgba(0, 159, 225)"
             let growthMax = 25
             let growthMin = 1
             // ? Do I write the logic for spawn distance here?
             let newTargetCircle = new targetCircles(spawnX, spawnY, r, sr, er, color, growthMax, growthMin)
             allTargets.push(newTargetCircle)
-        }, 750)
+        }, 2000)
 
         console.log(allTargets)
     }
@@ -283,12 +279,14 @@ function startGame() {
 // ! DRAW () 
     drawGameLoop = () => { 
         animation = requestAnimationFrame(drawGameLoop);
+        
+
         // ctx.clearRect(0, 0, canvas.width, canvas.height)
-        myBlack = "rgba(0, 0, 0, 0.1)" // Opacity maybe creating ghosting 
+        myBlack = "rgba(0, 105, 148, 0.9)" // Opacity maybe creating ghosting 
         ctx.fillStyle = myBlack
         ctx.fillRect(0, 0, canvas.width, canvas.height)
-        let cursor = new aimPointer(mouseX, mouseY, "green", 10, 10)
-        cursor.draw();
+        // let cursor = new aimPointer(mouseX, mouseY, "red", 10, 10)
+        // cursor.draw(); MAYBE NOT NECESSARY
         // * Target Draw
         allTargets.forEach((target) => {
             target.draw();
@@ -328,7 +326,6 @@ function startGame() {
         setTimeout(()=> {
             endGameMenu()
             cancelAnimationFrame(animation)
-
         }, 60000)
     
     }
@@ -349,8 +346,8 @@ function startGame() {
     }
 
 // ! MOVEMENT FUNCTIONS
-    var mouseX = 0;
-    var mouseY = 0;
+    let mouseX = 0;
+    let mouseY = 0;
     canvas.addEventListener("mousemove", setMousePosition, false)
 
     function setMousePosition(event) { // ! Mouse Event to get X & Y Position

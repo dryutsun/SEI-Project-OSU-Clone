@@ -1,12 +1,9 @@
+
 canvas {
 
     cursor:cell;
 }
-
-*{
-        border: 1px dotted red;
-}
-
+ 
 * {
     padding: 0;
     margin: 0;
@@ -30,6 +27,9 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    background-image: url("/assets/Sunbeam-in-the-ocean.-Socorro-Mexico-1349x700.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
 #score-board {
@@ -38,4 +38,5 @@ body {
     align-items: center;
     justify-content: space-around;
 }
+
 
